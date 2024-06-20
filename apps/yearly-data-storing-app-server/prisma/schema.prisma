@@ -1,0 +1,42 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Data {
+  content         String?
+  createdAt       DateTime  @default(now())
+  id              String    @id @default(cuid())
+  metadata        Metadata? @relation(fields: [metadataId], references: [id])
+  metadataId      String?
+  relatedMetadata String?
+  updatedAt       DateTime  @updatedAt
+  year            Int?
+}
+
+model Metadata {
+  createdAt DateTime @default(now())
+  dataItems Data[]
+  id        String   @id @default(cuid())
+  key       String?
+  metaKey   String?
+  metaValue String?
+  updatedAt DateTime @updatedAt
+  value     String?
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
