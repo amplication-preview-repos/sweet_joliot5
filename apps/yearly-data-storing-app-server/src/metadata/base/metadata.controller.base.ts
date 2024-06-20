@@ -29,6 +29,7 @@ import { MetadataUpdateInput } from "./MetadataUpdateInput";
 import { DataFindManyArgs } from "../../data/base/DataFindManyArgs";
 import { Data } from "../../data/base/Data";
 import { DataWhereUniqueInput } from "../../data/base/DataWhereUniqueInput";
+import { UpdateDataArgs } from "../../data/base/UpdateDataArgs";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -314,5 +315,22 @@ export class MetadataControllerBase {
       data,
       select: { id: true },
     });
+  }
+
+  @common.Patch("/metadata/:id")
+  @swagger.ApiOkResponse({
+    type: UpdateDataArgs,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async PatchMetadata(
+    @common.Body()
+    body: UpdateDataArgs
+  ): Promise<UpdateDataArgs> {
+    return this.service.PatchMetadata(body);
   }
 }

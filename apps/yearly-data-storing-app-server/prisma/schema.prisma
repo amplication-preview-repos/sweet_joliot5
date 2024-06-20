@@ -30,13 +30,18 @@ model Metadata {
 }
 
 model User {
-  createdAt DateTime @default(now())
-  email     String?  @unique
+  createdAt DateTime      @default(now())
+  email     String?       @unique
   firstName String?
-  id        String   @id @default(cuid())
+  id        String        @id @default(cuid())
   lastName  String?
   password  String
+  role      EnumUserRole?
   roles     Json
-  updatedAt DateTime @updatedAt
-  username  String   @unique
+  updatedAt DateTime      @updatedAt
+  username  String        @unique
+}
+
+enum EnumUserRole {
+  Option1
 }

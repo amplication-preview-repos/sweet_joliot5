@@ -26,6 +26,7 @@ import { Data } from "./Data";
 import { DataFindManyArgs } from "./DataFindManyArgs";
 import { DataWhereUniqueInput } from "./DataWhereUniqueInput";
 import { DataUpdateInput } from "./DataUpdateInput";
+import { UpdateDataArgs } from "./UpdateDataArgs";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -250,5 +251,39 @@ export class DataControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Patch("/data/:id")
+  @swagger.ApiOkResponse({
+    type: UpdateDataArgs,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async PatchData(
+    @common.Body()
+    body: string
+  ): Promise<UpdateDataArgs> {
+    return this.service.PatchData(body);
+  }
+
+  @common.Get("/:id/update-data")
+  @swagger.ApiOkResponse({
+    type: String,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async UpdateData(
+    @common.Body()
+    body: string
+  ): Promise<string> {
+    return this.service.UpdateData(body);
   }
 }

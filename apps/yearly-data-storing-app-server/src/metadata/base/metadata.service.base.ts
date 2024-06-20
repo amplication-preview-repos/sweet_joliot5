@@ -15,6 +15,7 @@ import {
   Metadata as PrismaMetadata,
   Data as PrismaData,
 } from "@prisma/client";
+import { UpdateDataArgs } from "../../data/base/UpdateDataArgs";
 
 export class MetadataServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -58,5 +59,8 @@ export class MetadataServiceBase {
         where: { id: parentId },
       })
       .dataItems(args);
+  }
+  async PatchMetadata(args: UpdateDataArgs): Promise<UpdateDataArgs> {
+    throw new Error("Not implemented");
   }
 }

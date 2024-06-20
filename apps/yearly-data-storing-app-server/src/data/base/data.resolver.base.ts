@@ -167,4 +167,20 @@ export class DataResolverBase {
     }
     return result;
   }
+
+  @graphql.Mutation(() => UpdateDataArgs)
+  async PatchData(
+    @graphql.Args()
+    args: UpdateDataArgs
+  ): Promise<UpdateDataArgs> {
+    return this.service.PatchData(args);
+  }
+
+  @graphql.Query(() => String)
+  async UpdateData(
+    @graphql.Args()
+    args: string
+  ): Promise<string> {
+    return this.service.UpdateData(args);
+  }
 }

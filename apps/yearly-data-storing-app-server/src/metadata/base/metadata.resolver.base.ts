@@ -28,6 +28,7 @@ import { UpdateMetadataArgs } from "./UpdateMetadataArgs";
 import { DeleteMetadataArgs } from "./DeleteMetadataArgs";
 import { DataFindManyArgs } from "../../data/base/DataFindManyArgs";
 import { Data } from "../../data/base/Data";
+import { UpdateDataArgs } from "../../data/base/UpdateDataArgs";
 import { MetadataService } from "../metadata.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Metadata)
@@ -162,5 +163,13 @@ export class MetadataResolverBase {
     }
 
     return results;
+  }
+
+  @graphql.Mutation(() => UpdateDataArgs)
+  async PatchMetadata(
+    @graphql.Args()
+    args: UpdateDataArgs
+  ): Promise<UpdateDataArgs> {
+    return this.service.PatchMetadata(args);
   }
 }
